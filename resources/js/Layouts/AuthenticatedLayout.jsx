@@ -2,7 +2,7 @@ import Dropdown from '@/Components/Dropdown';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function AuthenticatedLayout({ children }) {
-    const { auth } = usePage().props;
+    const { auth, cart_count } = usePage().props;
     const user = auth.user;
 
     return (
@@ -29,7 +29,7 @@ export default function AuthenticatedLayout({ children }) {
                             Products
                         </Link>
 
-                        {/* Cart icon */}
+                        {/* Cart icon + badge */}
                         <Link
                             href={route('cart.index')}
                             className="relative text-gray-700 hover:text-black"
@@ -49,6 +49,12 @@ export default function AuthenticatedLayout({ children }) {
                                     d="M2.25 3h1.386c.51 0 .96.343 1.09.835l.383 1.437M7.5 14.25h10.505c.867 0 1.625-.6 1.82-1.447l1.2-5.25H6.164M7.5 14.25L5.106 5.272M7.5 14.25l-1.5 6m13.5-6l1.5 6m-10.5 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm9 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
                                 />
                             </svg>
+
+                            {!!cart_count && cart_count > 0 && (
+                                <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-black text-white text-[11px] leading-[18px] text-center">
+                                    {cart_count > 99 ? '99+' : cart_count}
+                                </span>
+                            )}
                         </Link>
 
                         {/* User dropdown */}

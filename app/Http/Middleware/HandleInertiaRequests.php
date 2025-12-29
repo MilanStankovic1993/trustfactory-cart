@@ -31,9 +31,17 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+
             'auth' => [
                 'user' => $request->user(),
             ],
+
+            // total number of items in cart (sum of quantities) for the authenticated user
+            'cart_count' => fn () => $request->user()
+                ? \App\Models\CartItem::query()
+                    ->where('user_id', $request->user()->id)
+                    ->sum('quantity')
+                : 0,
         ];
     }
 }
